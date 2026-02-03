@@ -75,26 +75,46 @@ Work through the notebooks in `seatadvisor_analysis/`.
 - Aggregation: Creates 10-minute time bins (`t10`) for all streams.
 - Enrichment: Adds `building_id`, `is_hill` (campus flag), and other metadata.
 - COVID filter: Removes data from `2020-03-17` to `2022-04-03` due to atypical patterns.
-- Final output: Saves the master dataset as `data/final_data.csv`.
+- Final output: Saves the master dataset as `data/final_data.csv.gz`.
 
 ---
 
 ## Usage Example
 
+1. Set up the Environment
+Create a virtual environment and install the required libraries (Pandas, Numpy, Streamlit, etc.):
+
+# 1. Create virtual environment
+python -m venv .venv
+
+# 2. Activate it
+# Mac/Linux:
+source .venv/bin/activate
+# Windows:
+# .venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+2. Data
+The repository contains the compressed datasets (.gz).
+
+Note: The code has been updated to read the compressed files directly. Manual unzipping is not required.
+
+3. Run SeatAdvisor
+Run the application:
+
+
+# Start the GUI (if local)
+python seatadvisor_app/seatadvisor_gui.py
 Python:
 
 ```python
 import pandas as pd
 
 # Load the final processed data
-df = pd.read_csv("data/final_data.csv")
+df = pd.read_csv("data/final_data.csv.gz")
 print(df.head())
-```
-
-To run the GUI application:
-
-```bash
-python seatadvisor_app/seatadvisor_gui.py
 ```
 
 ---
