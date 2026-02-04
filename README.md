@@ -82,19 +82,30 @@ Work through the notebooks in `seatadvisor_analysis/`.
 ## Usage Example
 
 1. Set up the Environment
-Create a virtual environment and install the required libraries (Pandas, Numpy, Streamlit, etc.):
+Create a virtual environment and install the required libraries (Pandas, Numpy, Streamlit, etc.). The project expects a local virtual environment named `.venv`.
 
-# 1. Create virtual environment
-python -m venv .venv
+Recommended commands (macOS / Linux):
 
-# 2. Activate it
-# Mac/Linux:
+```bash
+python3 -m venv .venv
 source .venv/bin/activate
-# Windows:
-# .venv\Scripts\activate
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements.txt
+```
 
-# 3. Install dependencies
-pip install -r requirements.txt
+Troubleshooting:
+
+- If `pip` is not found after activating the venv (e.g. `zsh: command not found: pip`), use `python -m pip` instead of `pip`.
+- If the venv lacks pip, run:
+
+```bash
+python -m ensurepip --upgrade
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements.txt
+```
+- If your system uses the `python` command for a different interpreter, prefer `python3` when creating the venv: `python3 -m venv .venv`.
+
+Note: On some macOS setups `python3` is the correct system interpreter — the commands above explicitly use `python3` for creating the venv and `python -m pip` for installing packages inside the activated environment.
 
 2. Data
 The repository contains the compressed datasets (.gz).
@@ -116,6 +127,22 @@ import pandas as pd
 df = pd.read_csv("data/final_data.csv.gz")
 print(df.head())
 ```
+
+Running the GUI (what to expect)
+
+- The GUI is a small desktop application implemented with `tkinter` and opens in a separate window when you run `python seatadvisor_app/seatadvisor_gui.py`.
+- By default it reads data from `input/final_data.csv.gz` and priors from `input/priors.csv`. Place your prepared `final_data.csv.gz` and `priors.csv` files under the `input/` directory to use them.
+- Controls available in the window:
+  - Campus filters (Valley / Hill)
+  - Your current campus (for reachability/distance penalty)
+  - Weekday selector (Any, Monday ... Sunday)
+  - Time-of-day selector (Any, Morning, Afternoon, Evening)
+  - Exam period toggle and wheelchair accessibility requirement
+  - Stress threshold and Top-N results
+  - Priors sliders (Reachability, Air quality, Light, Power outlets) — these are normalized before use
+
+- The GUI computes recommendations using the processed dataset and the chosen priors. You can run it for any weekday or time-of-day combination and adjust priors interactively; results are shown in the recommendations table.
+- To change the data/priors paths, edit `DATA_PATH` and `PRIORS_PATH` at the top of `seatadvisor_app/seatadvisor_gui.py`.
 
 ---
 
