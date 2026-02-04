@@ -1,3 +1,5 @@
 input/final_data.csv
 export/seat_estimates.csv
 export/wlan_clients.csv
+.venv/
+requirements.txt
